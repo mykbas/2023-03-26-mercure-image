@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  # http://127.0.0.1:8080/.well-known/mercure/ui/
+  mercure:
+    #image: "dunglas/mercure"           # works
+    #image: "dunglas/mercure:latest"    # not working
+    image: "dunglas/mercure:v0.14.5"    # not working
+    environment:
+      SERVER_NAME: ':80'
+      MERCURE_PUBLISHER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeThisMercureHubJWTSecretKey!'
+      MERCURE_EXTRA_DIRECTIVES: |
+        cors_origins http://127.0.0.1:8000
+    command: /usr/bin/caddy run --config /etc/caddy/Caddyfile.dev
+    ports:
+      - "8080:80"
